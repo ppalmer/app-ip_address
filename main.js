@@ -47,10 +47,6 @@ class IpAddress {
   let callbackError = null;
   let mappedAddress = null;
 
-  let ipAddresses = {ipv4: null, ipv6: null};
-
-  let returnedObject = null;
-
   // Instantiate an object from the imported class and assign the instance to variable cidr.
   //const cidr = new IPCIDR(cidrStr);
   const cidr = new IPCIDR(cidrStr);
@@ -72,16 +68,15 @@ class IpAddress {
     [firstIpAddress] = cidr.toArray(options);
 
     mappedAddress = getIpv4MappedIpv6Address(firstIpAddress);
-
-    ipAddresses = {ipv4: firstIpAddress.valueOf(), ipv6: mappedAddress.valueOf()};
   }
 
-  returnedObject = `Ipv4: ${ipAddresses.ipv4}, Ipv6: ${ipAddresses.ipv6}`
+  const ipAddresses = {ipv4: firstIpAddress.valueOf(), ipv6: mappedAddress.valueOf()};
+  
   // Call the passed callback function.
   // Node.js convention is to pass error data as the first argument to a callback.
   // The IAP convention is to pass returned data as the first argument and error
   // data as the second argument to the callback function.
-  return callback(JSON.stringify(ipAddresses), callbackError);
+  return callback(ipAddresses, callbackError);
 }
 }
 
