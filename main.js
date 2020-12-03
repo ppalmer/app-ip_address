@@ -58,6 +58,8 @@ class IpAddress {
     limit: 1
   };
 
+  let ipAddresses = {ipv4: null, ipv6: null};
+
   // Use the object's isValid() method to verify the passed CIDR.
   if (!cidr.isValid()) {
     // If the passed CIDR is invalid, set an error message.
@@ -68,9 +70,8 @@ class IpAddress {
     [firstIpAddress] = cidr.toArray(options);
 
     mappedAddress = getIpv4MappedIpv6Address(firstIpAddress);
+    ipAddresses = {ipv4: firstIpAddress.valueOf(), ipv6: mappedAddress.valueOf()};
   }
-
-  const ipAddresses = {ipv4: firstIpAddress.valueOf(), ipv6: mappedAddress.valueOf()};
   
   // Call the passed callback function.
   // Node.js convention is to pass error data as the first argument to a callback.
